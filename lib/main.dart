@@ -1,9 +1,13 @@
+import 'package:awesome_chat_app/Screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'Screens/signin.dart';
 
-void main() {
+void main() async {
+  //! this must be init because new version of firebase need this. So use it wisely.
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "380018758738",
+    "project_id": "awesome-chat-6969",
+    "storage_bucket": "awesome-chat-6969.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380018758738:android:8e09456ee3bd7be2b4fb8b",
+        "android_client_info": {
+          "package_name": "com.example.awesome_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380018758738-9fc8k8be8opdu1k9hig20f05j86m60pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsOKWo0wnnoJUK8q1wC5Tp1b5I4ALgDg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380018758738-9fc8k8be8opdu1k9hig20f05j86m60pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
