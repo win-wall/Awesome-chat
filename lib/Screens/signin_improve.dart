@@ -35,23 +35,23 @@ class _SignIn_ImproveState extends State<SignIn_Improve>
       } else {
         authResult = await _auth.createUserWithEmailAndPassword(
             email: user.email, password: user.password);
+        await FirebaseFirestore.instance
+            .collection('users')
+            .document(user.email)
+            .setData({
+          'name': user.name,
+          'email': user.email,
+          'uid': authResult.user.uid
+        });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .document(authResult.user.uid)
+            .setData({
+          'name': user.name,
+          'email': user.email,
+          'uid': authResult.user.uid
+        });
       }
-      await FirebaseFirestore.instance
-          .collection('users')
-          .document(user.email)
-          .setData({
-        'name': user.name,
-        'email': user.email,
-        'uid': authResult.user.uid
-      });
-      await FirebaseFirestore.instance
-          .collection('users')
-          .document(authResult.user.uid)
-          .setData({
-        'name': user.name,
-        'email': user.email,
-        'uid': authResult.user.uid
-      });
     } on PlatformException catch (err) {
       var message = 'Error!';
       if (err.message != null) {
