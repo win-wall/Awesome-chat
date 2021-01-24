@@ -92,7 +92,7 @@ class _RecentChatsState extends State<RecentChats> {
                               MaterialPageRoute(
                                   builder: (_) => ChatScreens(
                                         current_uid: auth.currentUser.uid,
-                                        user_uid: yes ? sender : receiverName,
+                                        user_uid: yes ? sender : receiver,
                                         username:
                                             yes ? senderName : receiverName,
                                       ))),
