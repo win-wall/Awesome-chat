@@ -19,21 +19,7 @@ class _RecentChatsState extends State<RecentChats> {
   String current_uid;
   Message2 msg;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  void getuit() async {
-    var number_msg;
-    var user2 = auth.currentUser;
-    var uid = user2.uid;
-    current_uid = uid;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getuit();
-    print(current_uid);
-  }
-
+  bool yes;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -58,6 +44,7 @@ class _RecentChatsState extends State<RecentChats> {
                     );
                   }
                   final documents = streamSnapshot.data.documents;
+
                   bool date_not = false;
                   return ListView.builder(
                       itemCount: streamSnapshot.data.documents.length,
@@ -76,17 +63,39 @@ class _RecentChatsState extends State<RecentChats> {
                         if (date > date2) {
                           date_not = true;
                         }
-                        User2 user =
-                            new User2(name: receiverName, uid: receiver);
-                        msg = new Message2(
-                            text: text,
-                            sender: sender,
-                            receiver: receiver,
-                            time: time,
-                            isMe: isMe);
+                        if (receiver == auth.currentUser.uid) {
+                          print(receiverName);
+                          yes = true;
+                        } else {
+                          print(receiverName);
+                          yes = false;
+                        }
+
+                        if (sender == auth.currentUser.uid) {
+                          msg = new Message2(
+                              text: text,
+                              sender: sender,
+                              receiver: receiver,
+                              time: time,
+                              isMe: isMe);
+                        } else {
+                          msg = new Message2(
+                              text: text,
+                              sender: sender,
+                              receiver: receiver,
+                              time: time,
+                              isMe: isMe);
+                        }
                         return GestureDetector(
-                          onTap: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => ChatScreens(user: user,current_uid: auth.currentUser.uid,user_uid: user.uid,username: user.name,))),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ChatScreens(
+                                        current_uid: auth.currentUser.uid,
+                                        user_uid: yes ? receiver : sender,
+                                        username:
+                                            yes ? receiverName : senderName,
+                                      ))),
                           child: Container(
                             margin: EdgeInsets.only(
                                 top: 5.0, bottom: 5.0, right: 5.0, left: 5.0),
@@ -123,10 +132,12 @@ class _RecentChatsState extends State<RecentChats> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          msg.sender,
+                                          yes != null
+                                              ? senderName
+                                              : receiverName,
                                           style: TextStyle(
                                               color: Colors.grey,
-                                              fontSize: 5,
+                                              fontSize: 10,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(

@@ -148,16 +148,17 @@ class Message2 {
   bool isLiked;
   bool unread;
   bool isMe;
-  Message2(
-      {this.sender,
-      this.senderName,
-      this.time,
-      this.text,
-      this.isLiked,
-      this.unread,
-      this.receiver,
-      this.receiverName,
-      this.isMe});
+  Message2({
+    this.sender,
+    this.senderName,
+    this.time,
+    this.text,
+    this.isLiked,
+    this.unread,
+    this.receiver,
+    this.receiverName,
+    this.isMe,
+  });
   Map toMap() {
     var map = Map<String, dynamic>();
     map['sender'] = this.sender;

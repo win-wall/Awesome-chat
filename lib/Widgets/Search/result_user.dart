@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class result_User extends StatefulWidget {
   result_User(this._a);
-  User2 _a;
+  User2 _a; //user khác
   @override
   _result_UserState createState() => _result_UserState(_a);
 }
@@ -16,7 +16,7 @@ class result_User extends StatefulWidget {
 class _result_UserState extends State<result_User> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   User2 _a;
-  _result_UserState(this._a);
+  _result_UserState(this._a); //user khác
   String current_uid = '';
   void getuit() async {
     var number_msg;
@@ -83,10 +83,11 @@ class _result_UserState extends State<result_User> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => ChatScreens(
-                                        user: _a,
-                                        user_uid: _a.uid,
-                                        current_uid: current_uid,
-                                        username: _a.name)))
+                                        //user khác
+                                        user_uid: _a.uid, //user khác
+                                        current_uid:
+                                            current_uid, //user hiện tại
+                                        username: _a.name))) //user khác
                           },
                           child: AutoSizeText(
                             'Send Message',

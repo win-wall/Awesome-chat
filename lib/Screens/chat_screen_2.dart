@@ -6,28 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreens extends StatefulWidget {
-  final User2 user;
   final String user_uid;
   final String current_uid;
   final String username;
-  ChatScreens({this.user, this.user_uid, this.current_uid, this.username});
+  ChatScreens({this.user_uid, this.current_uid, this.username});
 
   @override
-  _ChatScreensState createState() => _ChatScreensState(
-      this.user, this.user_uid, this.current_uid, this.username);
+  _ChatScreensState createState() =>
+      _ChatScreensState(this.user_uid, this.current_uid, this.username);
 }
 
 class _ChatScreensState extends State<ChatScreens> {
-  User2 user;
   String text = '';
   String user_uid = '';
   String current_uid = '';
   String username = '';
+
   Message2 msg;
-  _ChatScreensState(this.user, this.user_uid, this.current_uid, this.username);
+  _ChatScreensState(this.user_uid, this.current_uid, this.username);
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   void sendMsg() async {
+    print('Hello' + user_uid);
     var Current_User_info = await FirebaseFirestore.instance
         .collection('users')
         .doc(auth.currentUser.email)
@@ -35,37 +35,37 @@ class _ChatScreensState extends State<ChatScreens> {
         .then((DocumentSnapshot snap) => snap.data());
 
     Message2 msg = Message2(
-        receiver: user.uid,
+        receiver: user_uid,
         sender: current_uid,
         text: text,
         isLiked: false,
         isMe: true,
         unread: true,
         senderName: Current_User_info['name'],
-        receiverName: user.name,
+        receiverName: username,
         time: Timestamp.now());
     Message2 msg2 = Message2(
-        receiver: user.uid,
+        receiver: user_uid,
         sender: current_uid,
         text: text,
         isLiked: false,
         isMe: false,
         unread: true,
         senderName: Current_User_info['name'],
-        receiverName: user.name,
+        receiverName: username,
         time: Timestamp.now());
     var map = msg.toMap();
     var map2 = msg2.toMap();
     print(current_uid);
     var number = await FirebaseFirestore.instance
         .collection('chats/${current_uid}/messages')
-        .doc(user.uid)
+        .doc(user_uid)
         .get()
         .then((DocumentSnapshot snap) => snap.data());
-    print(user.uid);
+    print(user_uid);
     var number2 = await FirebaseFirestore.instance
         .collection('chats/${current_uid}/messages')
-        .doc(user.uid)
+        .doc(user_uid)
         .collection('message')
         .get();
 
@@ -73,36 +73,36 @@ class _ChatScreensState extends State<ChatScreens> {
 
     await FirebaseFirestore.instance
         .collection('chats/${current_uid}/messages/')
-        .doc(user.uid)
+        .doc(user_uid)
         .collection('message')
         .doc((number2.docs.length + 1).toString())
         .set(map);
     await FirebaseFirestore.instance
-        .collection('chats/${current_uid}/messages/')
-        .doc(user.uid)
-        .set(map);
-    await FirebaseFirestore.instance
-        .collection('chats/${user.uid}/messages/')
+        .collection('chats/${user_uid}/messages/')
         .doc(current_uid)
+        .collection('message')
+        .doc((number2.docs.length + 1).toString())
         .set(map2);
     await FirebaseFirestore.instance
-        .collection('chats/${user.uid}/messages/')
+        .collection('chats/${current_uid}/messages/')
+        .doc(user_uid)
+        .set(map);
+    await FirebaseFirestore.instance
+        .collection('chats/${user_uid}/messages/')
         .doc(current_uid)
-        .collection('message')
-        .doc((number2.docs.length + 1).toString())
         .set(map2);
   }
 
-  _buildMessage(Message2 message, bool isMe) {
+  _buildMessage(Message2 message) {
     final msg = Container(
-      margin: isMe
-          ? EdgeInsets.only(top: 8, left: 80, right: 8)
-          : EdgeInsets.only(top: 8, left: 8),
+      margin: message.isMe
+          ? EdgeInsets.only(top: 8, left: 80, bottom: 8)
+          : EdgeInsets.only(top: 8, bottom: 8, right: 80),
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-      width: MediaQuery.of(context).size.width * 0.75,
+      width: MediaQuery.of(context).size.width * 0.5,
       decoration: BoxDecoration(
-          color: isMe ? Theme.of(context).accentColor : Colors.red,
-          borderRadius: isMe
+          color: (message.isMe) ? Colors.blue : Colors.red,
+          borderRadius: message.isMe
               ? BorderRadius.only(
                   topLeft: Radius.circular(15), bottomLeft: Radius.circular(15))
               : BorderRadius.only(
@@ -110,10 +110,10 @@ class _ChatScreensState extends State<ChatScreens> {
                   bottomRight: Radius.circular(15))),
       child: Column(
         crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            message.isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
         children: [
           Text(
-            DateFormat().format(message.time.toDate()),
+            DateFormat.Hms().format(message.time.toDate()),
             style: TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 16,
@@ -126,21 +126,12 @@ class _ChatScreensState extends State<ChatScreens> {
         ],
       ),
     );
-    if (isMe) {
+    if (message.isMe) {
       return msg;
     }
     return Row(
       children: [
         msg,
-        isMe
-            ? SizedBox.shrink()
-            : IconButton(
-                icon: message.isLiked
-                    ? Icon(Icons.favorite)
-                    : Icon(Icons.favorite_border),
-                iconSize: 30,
-                color: message.isLiked ? Colors.red : Colors.blueGrey,
-                onPressed: null)
       ],
     );
   }
@@ -178,7 +169,7 @@ class _ChatScreensState extends State<ChatScreens> {
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
           title: Text(
-            widget.user.name,
+            widget.username,
             textAlign: TextAlign.center,
           ),
           elevation: 0.0,
@@ -194,7 +185,7 @@ class _ChatScreensState extends State<ChatScreens> {
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('chats/${current_uid}/messages/')
-                    .doc(user.uid)
+                    .doc(user_uid)
                     .collection('message')
                     .orderBy('time', descending: true)
                     .snapshots(),
@@ -233,7 +224,7 @@ class _ChatScreensState extends State<ChatScreens> {
                                     time: time,
                                     isMe: isMe);
 
-                                return _buildMessage(msg, isMe);
+                                return _buildMessage(msg);
                               }));
                 },
 

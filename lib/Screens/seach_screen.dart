@@ -22,12 +22,12 @@ class _SearchScreenState extends State<SearchScreen> {
         .doc(_userEmail)
         .get()
         .then((DocumentSnapshot snap) => snap.data());
-    if (userRef != null && _isSubmit == false) {
+    if (userRef != null) {
       _isSubmit = true;
-    } else if (userRef == null && _isSubmit == true) _isSubmit = false;
+    } else if (userRef == null) _isSubmit = false;
     print(userRef);
     a = userRef;
-    user = new User2(name: a['name'], email: a['email'], uid: a['uid']);
+    user = User2(name: a['name'], email: a['email'], uid: a['uid']);
     setState(() {});
   }
 
@@ -58,9 +58,8 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
       body: _isSubmit
-          ? Container(
-              child: result_User(user),
-            )
+          ? Container(child: result_User(user) //truyền vào user khác,
+              )
           : Text(''),
     );
   }
