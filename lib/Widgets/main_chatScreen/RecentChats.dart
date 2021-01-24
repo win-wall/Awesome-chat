@@ -92,9 +92,9 @@ class _RecentChatsState extends State<RecentChats> {
                               MaterialPageRoute(
                                   builder: (_) => ChatScreens(
                                         current_uid: auth.currentUser.uid,
-                                        user_uid: yes ? receiver : sender,
+                                        user_uid: yes ? sender : receiverName,
                                         username:
-                                            yes ? receiverName : senderName,
+                                            yes ? senderName : receiverName,
                                       ))),
                           child: Container(
                             margin: EdgeInsets.only(
@@ -132,9 +132,7 @@ class _RecentChatsState extends State<RecentChats> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          yes != null
-                                              ? senderName
-                                              : receiverName,
+                                          yes ? senderName : receiverName,
                                           style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 10,
