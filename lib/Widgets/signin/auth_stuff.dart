@@ -1,3 +1,4 @@
+import 'package:awesome_chat_app/Models/user_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class Auth_stuff extends StatefulWidget {
 
 class _Auth_stuffState extends State<Auth_stuff> {
   final _formKey = GlobalKey<FormState>();
+  User2 user = new User2();
   String _userEmail = '';
   String _userPassword = '';
   bool _isLogin = true;
@@ -18,7 +20,7 @@ class _Auth_stuffState extends State<Auth_stuff> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
-      widget.submitFn(_userEmail, _userPassword, _isLogin);
+      widget.submitFn(user.email, user.password, _isLogin);
     }
   }
 
@@ -48,7 +50,7 @@ class _Auth_stuffState extends State<Auth_stuff> {
                         labelText: 'Email',
                         hintStyle: TextStyle(color: Colors.black12)),
                     onSaved: (value) {
-                      _userEmail = value;
+                      user.email = value;
                     },
                   ),
                 ),
@@ -67,7 +69,7 @@ class _Auth_stuffState extends State<Auth_stuff> {
                           labelText: 'Password',
                           hintStyle: TextStyle(color: Colors.black12)),
                       onSaved: (value) {
-                        _userPassword = value;
+                        user.password = value;
                       },
                     )),
               ],
