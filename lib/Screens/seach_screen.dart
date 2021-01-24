@@ -27,6 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
     } else if (userRef == null && _isSubmit == true) _isSubmit = false;
     print(userRef);
     a = userRef;
+    user = new User2(name: a['name'], email: a['email'], uid: a['uid']);
     setState(() {});
   }
 
@@ -40,6 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
             decoration: InputDecoration(labelText: 'Search user with email'),
             onChanged: (value) {
               _userEmail = value;
+              setState(() {});
             },
           ),
         ),
@@ -57,7 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: _isSubmit
           ? Container(
-              child: result_User(a),
+              child: result_User(user),
             )
           : Text(''),
     );

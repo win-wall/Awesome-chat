@@ -39,7 +39,11 @@ class _SignIn_ImproveState extends State<SignIn_Improve>
       await FirebaseFirestore.instance
           .collection('users')
           .document(user.email)
-          .setData({'name': user.name, 'email': user.email});
+          .setData({
+        'name': user.name,
+        'email': user.email,
+        'uid': authResult.user.uid
+      });
     } on PlatformException catch (err) {
       var message = 'Error!';
       if (err.message != null) {

@@ -121,8 +121,8 @@ class _MyChildState extends State<MyChild> {
                                   TextFormField(
                                     key: ValueKey('password'),
                                     validator: (value) {
-                                      if (value.isEmpty || value.length < 4) {
-                                        return 'Please enter at least 4 characters';
+                                      if (value.isEmpty || value.length < 6) {
+                                        return 'Please enter at least 6 characters';
                                       }
                                       return null;
                                     },

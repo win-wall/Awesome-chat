@@ -31,6 +31,7 @@ dependencies:
   cloud_firestore: ^0.14.4
   firebase_auth: ^0.18.4+1
   auto_size_text: ^2.1.0
+  intl: ^0.16.1
   rive: ^0.6.2
 dev_dependencies:
   flutter_test:

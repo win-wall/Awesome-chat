@@ -1,4 +1,5 @@
 import 'package:awesome_chat_app/Models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message {
   final User sender;
@@ -135,3 +136,39 @@ List<Message> messages = [
     unread: true,
   ),
 ];
+
+class Message2 {
+  String sender;
+  String receiver;
+  Timestamp
+      time; // Would usually be type DateTime or Firebase Timestamp in production apps
+  String text;
+  bool isLiked;
+  bool unread;
+  bool isMe;
+  Message2(
+      {this.sender,
+      this.time,
+      this.text,
+      this.isLiked,
+      this.unread,
+      this.receiver,
+      this.isMe});
+  Map toMap() {
+    var map = Map<String, dynamic>();
+    map['sender'] = this.sender;
+    map['text'] = this.text;
+    map['time'] = this.time;
+    map['receiver'] = this.receiver;
+    map['isMe'] = this.isMe;
+    return map;
+  }
+
+  Message2.fromMap(Map<String, dynamic> map) {
+    this.sender = map['sender'];
+    this.receiver = map['receiver'];
+    this.text = map['text'];
+    this.time = map['time'];
+    this.isMe = map['isMe'];
+  }
+}
