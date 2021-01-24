@@ -83,10 +83,10 @@ class _result_UserState extends State<result_User> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => ChatScreens(
-                                          user: _a,
-                                          user_uid: _a.uid,
-                                          current_uid: current_uid,
-                                        )))
+                                        user: _a,
+                                        user_uid: _a.uid,
+                                        current_uid: current_uid,
+                                        username: _a.name)))
                           },
                           child: AutoSizeText(
                             'Send Message',

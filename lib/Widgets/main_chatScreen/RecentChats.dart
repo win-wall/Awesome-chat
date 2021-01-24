@@ -1,9 +1,11 @@
 import 'package:awesome_chat_app/Models/message_model.dart';
+import 'package:awesome_chat_app/Models/user_model.dart';
 import 'package:awesome_chat_app/Screens/chat_screen.dart';
 import 'package:awesome_chat_app/Screens/chat_screen_2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class RecentChats extends StatefulWidget {
   RecentChats({Key key}) : super(key: key);
@@ -13,6 +15,7 @@ class RecentChats extends StatefulWidget {
 }
 
 class _RecentChatsState extends State<RecentChats> {
+  User2 user;
   String current_uid;
   Message2 msg;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -55,13 +58,117 @@ class _RecentChatsState extends State<RecentChats> {
                     );
                   }
                   final documents = streamSnapshot.data.documents;
+                  bool date_not = false;
                   return ListView.builder(
                       itemCount: streamSnapshot.data.documents.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Text(documents[index]['text']);
+                        String text = documents[index]['text'];
+                        String sender = documents[index]['sender'];
+                        String receiver = documents[index]['receiver'];
+                        String receiverName = documents[index]['receiverName'];
+                        String senderName = documents[index]['senderName'];
+                        Timestamp time = documents[index]['time'];
+                        bool isMe = documents[index]['isMe'];
+                        DateTime now = DateTime.now();
+                        int date = int.parse(DateFormat('dd').format(now));
+                        int date2 =
+                            int.parse(DateFormat('dd').format(time.toDate()));
+                        if (date > date2) {
+                          date_not = true;
+                        }
+                        User2 user =
+                            new User2(name: receiverName, uid: receiver);
+                        msg = new Message2(
+                            text: text,
+                            sender: sender,
+                            receiver: receiver,
+                            time: time,
+                            isMe: isMe);
+                        return GestureDetector(
+                          onTap: () => Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => ChatScreens(user: user,current_uid: auth.currentUser.uid,user_uid: user.uid,username: user.name,))),
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                top: 5.0, bottom: 5.0, right: 5.0, left: 5.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(
+                                        MediaQuery.of(context).size.width *
+                                            0.1),
+                                    bottomRight: Radius.circular(
+                                        MediaQuery.of(context).size.width *
+                                            0.1),
+                                    topLeft: Radius.circular(
+                                        MediaQuery.of(context).size.width *
+                                            0.1),
+                                    bottomLeft: Radius.circular(
+                                        MediaQuery.of(context).size.width *
+                                            0.1))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 35,
+                                    ),
+                                    SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          msg.sender,
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 5,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.45,
+                                          child: Text(
+                                            msg.text,
+                                            style: TextStyle(
+                                                color: Colors.blueGrey,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(date_not
+                                        ? DateFormat('yyyy-MM-dd')
+                                            .format(msg.time.toDate())
+                                        : DateFormat.Hms()
+                                            .format(msg.time.toDate())),
+                                    Text('new')
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
                       });
                 })));
-    /* ListView.builder(
+  }
+}
+/* ListView.builder(
           itemCount: chats.length,
           itemBuilder: (BuildContext ctx, int index) {
             final Message chat = chats[index];
@@ -131,6 +238,6 @@ class _RecentChatsState extends State<RecentChats> {
               ),
             );
           },
-        ),*/
+        ),
   }
-}
+}*/

@@ -9,11 +9,12 @@ class ChatScreens extends StatefulWidget {
   final User2 user;
   final String user_uid;
   final String current_uid;
-  ChatScreens({this.user, this.user_uid, this.current_uid});
+  final String username;
+  ChatScreens({this.user, this.user_uid, this.current_uid, this.username});
 
   @override
-  _ChatScreensState createState() =>
-      _ChatScreensState(this.user, this.user_uid, this.current_uid);
+  _ChatScreensState createState() => _ChatScreensState(
+      this.user, this.user_uid, this.current_uid, this.username);
 }
 
 class _ChatScreensState extends State<ChatScreens> {
@@ -21,11 +22,18 @@ class _ChatScreensState extends State<ChatScreens> {
   String text = '';
   String user_uid = '';
   String current_uid = '';
+  String username = '';
   Message2 msg;
-  _ChatScreensState(this.user, this.user_uid, this.current_uid);
+  _ChatScreensState(this.user, this.user_uid, this.current_uid, this.username);
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   void sendMsg() async {
+    var Current_User_info = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(auth.currentUser.email)
+        .get()
+        .then((DocumentSnapshot snap) => snap.data());
+
     Message2 msg = Message2(
         receiver: user.uid,
         sender: current_uid,
@@ -33,6 +41,8 @@ class _ChatScreensState extends State<ChatScreens> {
         isLiked: false,
         isMe: true,
         unread: true,
+        senderName: Current_User_info['name'],
+        receiverName: user.name,
         time: Timestamp.now());
     Message2 msg2 = Message2(
         receiver: user.uid,
@@ -41,6 +51,8 @@ class _ChatScreensState extends State<ChatScreens> {
         isLiked: false,
         isMe: false,
         unread: true,
+        senderName: Current_User_info['name'],
+        receiverName: user.name,
         time: Timestamp.now());
     var map = msg.toMap();
     var map2 = msg2.toMap();

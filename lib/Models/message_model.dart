@@ -139,7 +139,9 @@ List<Message> messages = [
 
 class Message2 {
   String sender;
+  String senderName;
   String receiver;
+  String receiverName;
   Timestamp
       time; // Would usually be type DateTime or Firebase Timestamp in production apps
   String text;
@@ -148,11 +150,13 @@ class Message2 {
   bool isMe;
   Message2(
       {this.sender,
+      this.senderName,
       this.time,
       this.text,
       this.isLiked,
       this.unread,
       this.receiver,
+      this.receiverName,
       this.isMe});
   Map toMap() {
     var map = Map<String, dynamic>();
@@ -161,6 +165,8 @@ class Message2 {
     map['time'] = this.time;
     map['receiver'] = this.receiver;
     map['isMe'] = this.isMe;
+    map['receiverName'] = this.receiverName;
+    map['senderName'] = this.senderName;
     return map;
   }
 
@@ -170,5 +176,7 @@ class Message2 {
     this.text = map['text'];
     this.time = map['time'];
     this.isMe = map['isMe'];
+    this.senderName = map['senderName'];
+    this.receiverName = map['receiverName'];
   }
 }
