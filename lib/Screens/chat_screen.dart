@@ -2,6 +2,7 @@ import 'package:awesome_chat_app/Models/message_model.dart';
 import 'package:awesome_chat_app/Screens/seach_screen.dart';
 import 'package:awesome_chat_app/Widgets/main_chatScreen/CategorySection.dart';
 import 'package:awesome_chat_app/Widgets/main_chatScreen/RecentChats.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,13 +15,33 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
-          leading: IconButton(
+          leading: DropdownButton(
             icon: Icon(
-              Icons.menu,
+              Icons.more_vert,
               color: Colors.white,
             ),
             iconSize: 30,
-            color: Colors.white,
+            items: [
+              DropdownMenuItem(
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(Icons.exit_to_app),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Log out')
+                    ],
+                  ),
+                ),
+                value: 'log out',
+              )
+            ],
+            onChanged: (itemIdentifier) {
+              if (itemIdentifier == 'log out') {
+                FirebaseAuth.instance.signOut();
+              }
+            },
           ),
           title: Text(
             'Chats',
