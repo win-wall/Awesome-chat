@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_chat_app/Models/message_model.dart';
 import 'package:awesome_chat_app/Models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emoji_picker/emoji_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -39,14 +40,30 @@ class _ChatScreensState extends State<ChatScreens> {
   String current_uid = '';
   String username = '';
   String url = '';
-
+  bool showEmoijiPicker = false;
   Message2 msg;
+  FocusNode textFieldFocus = FocusNode();
+  bool isWriting = false;
   _ChatScreensState(this.user_uid, this.current_uid, this.username, this.url,
       this.receiverurl, this.senderurl);
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _field = TextEditingController();
   void ClearTextInput() {
     _field.clear();
+  }
+
+  showKeybroad() => textFieldFocus.requestFocus();
+  hideKeybroad() => textFieldFocus.unfocus();
+  hideEmojiContainer() {
+    setState(() {
+      showEmoijiPicker = false;
+    });
+  }
+
+  showEmojiContainer() {
+    setState(() {
+      showEmoijiPicker = true;
+    });
   }
 
   void sendMsg() async {
@@ -175,14 +192,31 @@ class _ChatScreensState extends State<ChatScreens> {
       child: Row(
         children: [
           Expanded(
-              child: TextField(
-            controller: _field,
-            decoration:
-                InputDecoration.collapsed(hintText: 'Send a message...'),
-            onChanged: (vaule) {
-              text = vaule;
-            },
-          )),
+              child: Stack(alignment: Alignment.centerRight, children: [
+            TextField(
+              controller: _field,
+              focusNode: textFieldFocus,
+              onTap: () => hideEmojiContainer(),
+              decoration:
+                  InputDecoration.collapsed(hintText: 'Send a message...'),
+              onChanged: (vaule) {
+                text = _field.text;
+              },
+            ),
+            IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                icon: Icon(Icons.face),
+                onPressed: () {
+                  if (!showEmoijiPicker) {
+                    hideKeybroad();
+                    showEmojiContainer();
+                  } else {
+                    showKeybroad();
+                    hideEmojiContainer();
+                  }
+                })
+          ])),
           IconButton(
               icon: Icon(Icons.send),
               onPressed: () {
@@ -290,8 +324,22 @@ class _ChatScreensState extends State<ChatScreens> {
             ),
           ),
           _buildMessageComposer(),
+          showEmoijiPicker ? Container(child: emojiContainer()) : Container()
         ]),
       ),
     );
+  }
+
+  emojiContainer() {
+    return EmojiPicker(
+        bgColor: Colors.black,
+        indicatorColor: Colors.blue,
+        rows: 3,
+        columns: 7,
+        onEmojiSelected: (emoji, category) {
+          setState(() {
+            _field.text = _field.text + emoji.emoji;
+          });
+        });
   }
 }
