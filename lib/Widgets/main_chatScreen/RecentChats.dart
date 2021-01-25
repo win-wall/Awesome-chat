@@ -20,6 +20,8 @@ class _RecentChatsState extends State<RecentChats> {
   String current_uid;
   Message2 msg;
   String url;
+  String senderurl;
+  String receiverurl;
   final FirebaseAuth auth = FirebaseAuth.instance;
   bool yes;
   @override
@@ -59,6 +61,8 @@ class _RecentChatsState extends State<RecentChats> {
                         Timestamp time = documents[index]['time'];
                         bool isMe = documents[index]['isMe'];
                         url = documents[index]['url'];
+                        senderurl = documents[index]['senderurl'];
+                        receiverurl = documents[index]['receiverurl'];
                         DateTime now = DateTime.now();
                         int date = int.parse(DateFormat('dd').format(now));
                         int date2 =
@@ -94,10 +98,16 @@ class _RecentChatsState extends State<RecentChats> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => ChatScreens(
-                                      current_uid: auth.currentUser.uid,
-                                      user_uid: yes ? sender : receiver,
-                                      username: yes ? senderName : receiverName,
-                                      url: url))),
+                                        current_uid: auth.currentUser.uid,
+                                        user_uid: yes ? sender : receiver,
+                                        username:
+                                            yes ? senderName : receiverName,
+                                        url: url,
+                                        senderurl:
+                                            yes ? senderurl : receiverurl,
+                                        receiverurl:
+                                            yes ? receiverurl : senderurl,
+                                      ))),
                           child: Container(
                             margin: EdgeInsets.only(
                                 top: 5.0, bottom: 5.0, right: 5.0, left: 5.0),
@@ -126,7 +136,9 @@ class _RecentChatsState extends State<RecentChats> {
                                     CircleAvatar(
                                       radius: 35,
                                       backgroundImage: url != null
-                                          ? NetworkImage(url)
+                                          ? yes
+                                              ? NetworkImage(receiverurl)
+                                              : NetworkImage(senderurl)
                                           : null,
                                     ),
                                     SizedBox(

@@ -11,21 +11,38 @@ class ChatScreens extends StatefulWidget {
   final String current_uid;
   final String username;
   final String url;
-  ChatScreens({this.user_uid, this.current_uid, this.username, this.url});
+  final String senderurl;
+  final String receiverurl;
+  ChatScreens(
+      {this.user_uid,
+      this.current_uid,
+      this.username,
+      this.url,
+      this.senderurl,
+      this.receiverurl});
 
   @override
   _ChatScreensState createState() => _ChatScreensState(
-      this.user_uid, this.current_uid, this.username, this.url);
+      this.user_uid,
+      this.current_uid,
+      this.username,
+      this.url,
+      this.senderurl,
+      this.receiverurl);
 }
 
 class _ChatScreensState extends State<ChatScreens> {
+  String senderurl = '';
+  String receiverurl = '';
   String text = '';
   String user_uid = '';
   String current_uid = '';
   String username = '';
   String url = '';
+
   Message2 msg;
-  _ChatScreensState(this.user_uid, this.current_uid, this.username, this.url);
+  _ChatScreensState(this.user_uid, this.current_uid, this.username, this.url,
+      this.receiverurl, this.senderurl);
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _field = TextEditingController();
   void ClearTextInput() {
@@ -50,7 +67,9 @@ class _ChatScreensState extends State<ChatScreens> {
         senderName: Current_User_info['name'],
         receiverName: username,
         time: Timestamp.now(),
-        url: url);
+        url: url,
+        senderurl: senderurl,
+        receiverurl: receiverurl);
     Message2 msg2 = Message2(
         receiver: user_uid,
         sender: current_uid,
@@ -61,7 +80,9 @@ class _ChatScreensState extends State<ChatScreens> {
         senderName: Current_User_info['name'],
         receiverName: username,
         time: Timestamp.now(),
-        url: url);
+        url: url,
+        senderurl: senderurl,
+        receiverurl: receiverurl);
     var map = msg.toMap();
     var map2 = msg2.toMap();
     print(current_uid);

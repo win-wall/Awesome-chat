@@ -16,13 +16,19 @@ class result_User extends StatefulWidget {
 class _result_UserState extends State<result_User> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   User2 _a;
-  _result_UserState(this._a); //user khác
+  _result_UserState(this._a);
+  var b; //user khác
   String current_uid = '';
   void getuit() async {
     var number_msg;
     var user2 = auth.currentUser;
     var uid = user2.uid;
     current_uid = uid;
+    b = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(current_uid)
+        .get()
+        .then((DocumentSnapshot snap) => snap.data());
   }
 
   @override
@@ -94,14 +100,19 @@ class _result_UserState extends State<result_User> {
                             getuit(),
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (_) => ChatScreens(
-                                        //user khác
-                                        user_uid: _a.uid, //user khác
-                                        current_uid:
-                                            current_uid, //user hiện tại
-                                        username: _a.name,
-                                        url: _a.url))) //user khác
+                                b != null
+                                    ? MaterialPageRoute(
+                                        builder: (_) => ChatScreens(
+                                              //user khác
+                                              user_uid: _a.uid, //user khác
+                                              current_uid:
+                                                  current_uid, //user hiện tại
+                                              username: _a.name,
+                                              url: _a.url,
+                                              receiverurl: _a.url,
+                                              senderurl: b['url'],
+                                            ))
+                                    : Container()) //user khác
                           },
                           child: AutoSizeText(
                             'Send Message',

@@ -145,6 +145,8 @@ class Message2 {
   String receiver;
   String receiverName;
   String url;
+  String senderurl;
+  String receiverurl;
   Timestamp
       time; // Would usually be type DateTime or Firebase Timestamp in production apps
   String text;
@@ -161,7 +163,9 @@ class Message2 {
       this.receiver,
       this.receiverName,
       this.isMe,
-      this.url});
+      this.url,
+      this.senderurl,
+      this.receiverurl});
   Map toMap() {
     var map = Map<String, dynamic>();
     map['sender'] = this.sender;
@@ -172,6 +176,8 @@ class Message2 {
     map['receiverName'] = this.receiverName;
     map['senderName'] = this.senderName;
     map['url'] = this.url;
+    map['senderurl'] = this.senderurl;
+    map['receiverurl'] = this.receiverurl;
     return map;
   }
 
@@ -184,5 +190,7 @@ class Message2 {
     this.senderName = map['senderName'];
     this.receiverName = map['receiverName'];
     this.url = map['url'];
+    this.senderurl = map['senderurl'];
+    this.receiverurl = map['receiverurl'];
   }
 }
