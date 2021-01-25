@@ -16,6 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
   bool _isSubmit = false;
   User2 user;
   Map a;
+  FocusNode myFocusNode = new FocusNode();
   void getData() async {
     var userRef = await Firestore.instance
         .collection('users')
@@ -37,14 +38,27 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Form(
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(labelText: 'Search user with email'),
-            style: TextStyle(color: Colors.white),
-            onChanged: (value) {
-              _userEmail = value;
-              setState(() {});
-            },
+          child: Container(
+            alignment: Alignment(0, -1),
+            child: Container(
+              alignment: Alignment(0, -1),
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: TextField(
+                focusNode: myFocusNode,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    labelText: 'Search user with email',
+                    labelStyle: TextStyle(
+                        color: myFocusNode.hasFocus
+                            ? Color.fromRGBO(189, 143, 164, 1)
+                            : Colors.white70)),
+                style: TextStyle(color: Colors.white),
+                onChanged: (value) {
+                  _userEmail = value;
+                  setState(() {});
+                },
+              ),
+            ),
           ),
         ),
         actions: <Widget>[
