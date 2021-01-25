@@ -10,11 +10,11 @@
 Android 4.0 or greater and have internet connection
 ## Thư viện và công nghệ
 * Thư viện:
-+ Flutter SDK
+- Flutter SDK
 * Công nghệ:
-+ Vẽ Animation đẹp và tương tác với user tốt nhất cho Flutter: Rive 2
-+ Firebase
-+ Emoji Picker
+- Vẽ Animation đẹp và tương tác với user tốt nhất cho Flutter: Rive 2
+- Firebase
+- Emoji Picker
 ## Backend/Database/Diagram
 ![alt text](https://github.com/win-wall/Awesome-chat/blob/main/database.png)
 ## Tác giả:
