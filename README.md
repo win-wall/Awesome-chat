@@ -16,7 +16,7 @@ Android 4.0 or greater and have internet connection
 + Firebase
 + Emoji Picker
 ## Backend/Database/Diagram
-
+![alt text](https://github.com/win-wall/Awesome-chat/blob/main/database.png)
 ## Tác giả:
 + Thôi Đặng Thắng Tường
 + Nguyễn Văn Hoài Nam
