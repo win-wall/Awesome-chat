@@ -1,5 +1,6 @@
 import 'package:awesome_chat_app/Screens/chat_screen.dart';
 import 'package:awesome_chat_app/Screens/signin_improve.dart';
+import 'package:awesome_chat_app/Screens/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primaryColor: Colors.red,
+          primaryColor: Color.fromRGBO(60, 59, 45, 1),
           accentColor: Color(0xFFFEF9EB),
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
               if (userSnapshot.hasData) {
                 return ChatScreen();
               }
-              return SignIn_Improve();
+              return WelcomeScreen();
             }));
   }
 }

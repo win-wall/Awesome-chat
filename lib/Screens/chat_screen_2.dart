@@ -9,11 +9,12 @@ class ChatScreens extends StatefulWidget {
   final String user_uid;
   final String current_uid;
   final String username;
-  ChatScreens({this.user_uid, this.current_uid, this.username});
+  final String url;
+  ChatScreens({this.user_uid, this.current_uid, this.username, this.url});
 
   @override
-  _ChatScreensState createState() =>
-      _ChatScreensState(this.user_uid, this.current_uid, this.username);
+  _ChatScreensState createState() => _ChatScreensState(
+      this.user_uid, this.current_uid, this.username, this.url);
 }
 
 class _ChatScreensState extends State<ChatScreens> {
@@ -21,9 +22,9 @@ class _ChatScreensState extends State<ChatScreens> {
   String user_uid = '';
   String current_uid = '';
   String username = '';
-
+  String url = '';
   Message2 msg;
-  _ChatScreensState(this.user_uid, this.current_uid, this.username);
+  _ChatScreensState(this.user_uid, this.current_uid, this.username, this.url);
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   void sendMsg() async {
@@ -43,7 +44,8 @@ class _ChatScreensState extends State<ChatScreens> {
         unread: true,
         senderName: Current_User_info['name'],
         receiverName: username,
-        time: Timestamp.now());
+        time: Timestamp.now(),
+        url: url);
     Message2 msg2 = Message2(
         receiver: user_uid,
         sender: current_uid,
@@ -53,7 +55,8 @@ class _ChatScreensState extends State<ChatScreens> {
         unread: true,
         senderName: Current_User_info['name'],
         receiverName: username,
-        time: Timestamp.now());
+        time: Timestamp.now(),
+        url: url);
     var map = msg.toMap();
     var map2 = msg2.toMap();
     print(current_uid);

@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_chat_app/Models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'user_image_picker.dart';
 
 class MyChild extends StatefulWidget {
   //! this is place where we create contructor to get all information from Mychild to signin_improve
   MyChild(this.submitFn, this.isLoading);
   final bool isLoading;
-  final void Function(User2 user, bool isLogin, BuildContext ctx) submitFn;
+  final void Function(User2 user, bool isLogin, File image, BuildContext ctx)
+      submitFn;
   @override
   _MyChildState createState() => _MyChildState();
 }
@@ -19,15 +24,30 @@ class _MyChildState extends State<MyChild> {
   String _userEmail = '';
   String _userPassword = '';
   String _userName = '';
+  File _userImageFile;
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
+
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
+    if (_userImageFile == null && !_isLogin) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Please pick an image'),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
+      return;
+    }
     if (isValid) {
       //! This will trigger TextFormField to save the information
       _formKey.currentState.save();
       //! This will save all information from Form widget bellow, to submitFn contructor above, and pointer from signin_improve can get
       //! information to submit it into firebase
-      widget.submitFn(user, _isLogin, context);
+      widget.submitFn(user, _isLogin, _userImageFile, context);
+      FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
+        if (firebaseUser != null) Navigator.pop(context);
+      });
     }
   }
 
@@ -53,10 +73,13 @@ class _MyChildState extends State<MyChild> {
                   children: <Widget>[
                     //! this is container contain Hello
                     Container(
-                      alignment: Alignment(-1, -0.7),
+                      alignment:
+                          _isLogin ? Alignment(-1, -0.7) : Alignment(-1, -0.8),
                       child: Container(
                         child: AutoSizeText(
-                          'Hello there,\nWelcome back!',
+                          _isLogin
+                              ? 'Hello there,\nWelcome back!'
+                              : 'Hello new friend,\nLet create an account',
                           style: TextStyle(
                               fontSize: 100,
                               color: Colors.black,
@@ -70,7 +93,8 @@ class _MyChildState extends State<MyChild> {
                     ),
                     //! this is container contain Form
                     Container(
-                      alignment: Alignment(0.3, 0.6),
+                      alignment:
+                          _isLogin ? Alignment(0.3, 0.6) : Alignment(0.3, -0.1),
                       child: SingleChildScrollView(
                         child: Container(
                           //color: Colors.black,
@@ -79,6 +103,7 @@ class _MyChildState extends State<MyChild> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
+                                  if (!_isLogin) UserImagePicker(_pickedImage),
                                   TextFormField(
                                     key: ValueKey('email'),
                                     validator: (value) {
@@ -95,10 +120,12 @@ class _MyChildState extends State<MyChild> {
                                       user.email = value.trim();
                                     },
                                   ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02,
-                                  ),
+                                  if (_isLogin)
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                    ),
                                   if (!_isLogin)
                                     TextFormField(
                                       key: ValueKey('name'),
@@ -114,10 +141,12 @@ class _MyChildState extends State<MyChild> {
                                         user.name = value.trim();
                                       },
                                     ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02,
-                                  ),
+                                  if (_isLogin)
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                    ),
                                   TextFormField(
                                     key: ValueKey('password'),
                                     validator: (value) {
@@ -135,7 +164,9 @@ class _MyChildState extends State<MyChild> {
                                   ),
                                 ],
                               )),
-                          height: MediaQuery.of(context).size.height * 0.5082,
+                          height: _isLogin
+                              ? MediaQuery.of(context).size.height * 0.5082
+                              : MediaQuery.of(context).size.height * 0.45,
                           width: MediaQuery.of(context).size.width * 0.9108,
                         ),
                       ),

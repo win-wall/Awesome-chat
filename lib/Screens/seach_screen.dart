@@ -27,7 +27,8 @@ class _SearchScreenState extends State<SearchScreen> {
     } else if (userRef == null) _isSubmit = false;
     print(userRef);
     a = userRef;
-    user = User2(name: a['name'], email: a['email'], uid: a['uid']);
+    user =
+        User2(name: a['name'], email: a['email'], uid: a['uid'], url: a['url']);
     setState(() {});
   }
 

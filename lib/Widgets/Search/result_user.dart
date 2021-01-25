@@ -36,10 +36,23 @@ class _result_UserState extends State<result_User> {
             child: Stack(
               children: <Widget>[
                 Container(
+                  alignment: Alignment(0, -0.5),
+                  child: Container(
+                    alignment: Alignment(0, 0),
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: CircleAvatar(
+                      backgroundImage:
+                          _a.url != null ? NetworkImage(_a.url) : null,
+                      radius: 40,
+                    ),
+                  ),
+                ),
+                Container(
                     alignment: Alignment(0, 0.1),
                     child: Container(
                       alignment: Alignment(0, 0),
-                      height: MediaQuery.of(context).size.height * 0.15,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: AutoSizeText(
                         _a.name,
@@ -48,7 +61,7 @@ class _result_UserState extends State<result_User> {
                             fontSize: MediaQuery.of(context).size.height * 0.06,
                             color: Colors.white,
                             fontWeight: FontWeight.w300),
-                        maxLines: 2,
+                        maxLines: 1,
                       ),
                     )),
                 Container(
@@ -58,13 +71,13 @@ class _result_UserState extends State<result_User> {
                     height: MediaQuery.of(context).size.height * 0.04,
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: AutoSizeText(
-                      _a.name,
+                      _a.email,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: MediaQuery.of(context).size.height * 0.02,
                           color: Colors.white,
                           fontWeight: FontWeight.w300),
-                      maxLines: 2,
+                      maxLines: 1,
                     ),
                   ),
                 ),
@@ -87,7 +100,8 @@ class _result_UserState extends State<result_User> {
                                         user_uid: _a.uid, //user khác
                                         current_uid:
                                             current_uid, //user hiện tại
-                                        username: _a.name))) //user khác
+                                        username: _a.name,
+                                        url: _a.url))) //user khác
                           },
                           child: AutoSizeText(
                             'Send Message',

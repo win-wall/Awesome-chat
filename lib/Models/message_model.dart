@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_chat_app/Models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -142,23 +144,24 @@ class Message2 {
   String senderName;
   String receiver;
   String receiverName;
+  String url;
   Timestamp
       time; // Would usually be type DateTime or Firebase Timestamp in production apps
   String text;
   bool isLiked;
   bool unread;
   bool isMe;
-  Message2({
-    this.sender,
-    this.senderName,
-    this.time,
-    this.text,
-    this.isLiked,
-    this.unread,
-    this.receiver,
-    this.receiverName,
-    this.isMe,
-  });
+  Message2(
+      {this.sender,
+      this.senderName,
+      this.time,
+      this.text,
+      this.isLiked,
+      this.unread,
+      this.receiver,
+      this.receiverName,
+      this.isMe,
+      this.url});
   Map toMap() {
     var map = Map<String, dynamic>();
     map['sender'] = this.sender;
@@ -168,6 +171,7 @@ class Message2 {
     map['isMe'] = this.isMe;
     map['receiverName'] = this.receiverName;
     map['senderName'] = this.senderName;
+    map['url'] = this.url;
     return map;
   }
 
@@ -179,5 +183,6 @@ class Message2 {
     this.isMe = map['isMe'];
     this.senderName = map['senderName'];
     this.receiverName = map['receiverName'];
+    this.url = map['url'];
   }
 }

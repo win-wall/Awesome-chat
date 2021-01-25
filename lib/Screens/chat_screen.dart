@@ -13,7 +13,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Color.fromRGBO(60, 59, 45, 1),
         appBar: AppBar(
           leading: DropdownButton(
             icon: Icon(
