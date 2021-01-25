@@ -9,9 +9,9 @@
 ## Yêu cầu thiết bị
 Android 4.0 or greater and have internet connection
 ## Thư viện và công nghệ
-Thư viện:
+** Thư viện:
 - Flutter SDK
-Công nghệ:
+** Công nghệ:
 - Vẽ Animation đẹp và tương tác với user tốt nhất cho Flutter: Rive 2
 - Firebase
 - Emoji Picker
