@@ -1,16 +1,23 @@
-# awesome_chat_app
+## Chức năng:
+1. Tạo tài khoản user chat
+2. Đăng nhập tài khoản user chat
+3. Tải image của user chat khi đăng ký lên firebase storage
+4. Tìm kiếm user chat
+5. Nhắn tin với user chat
+6. Xem các tin nhắn mà các user chat đã chat với nhau
+7. Pick Emoji từ server
+## Yêu cầu thiết bị
+Android 4.0 or greater and have internet connection
+## Thư viện và công nghệ
+* Thư viện:
++ Flutter SDK
+* Công nghệ:
++ Vẽ Animation đẹp và tương tác với user tốt nhất cho Flutter: Rive 2
++ Firebase
++ Emoji Picker
+## Backend/Database/Diagram
 
-A new Flutter project.
+## Tác giả:
++ Thôi Đặng Thắng Tường
++ Nguyễn Văn Hoài Nam
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
