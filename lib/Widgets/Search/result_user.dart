@@ -32,19 +32,19 @@ class _result_UserState extends State<result_User> {
         alignment: Alignment(0, 0),
         child: Container(
           child: Card(
-            color: Colors.blue,
+            color: Color.fromRGBO(143, 187, 189, 1),
             child: Stack(
               children: <Widget>[
                 Container(
                   alignment: Alignment(0, -0.5),
                   child: Container(
                     alignment: Alignment(0, 0),
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: CircleAvatar(
                       backgroundImage:
                           _a.url != null ? NetworkImage(_a.url) : null,
-                      radius: 40,
+                      radius: MediaQuery.of(context).size.width * 0.2,
                     ),
                   ),
                 ),
@@ -82,9 +82,9 @@ class _result_UserState extends State<result_User> {
                   ),
                 ),
                 Container(
-                    alignment: Alignment(-0.9, 0.95),
+                    alignment: Alignment(0, 0.95),
                     child: Container(
-                        color: Colors.amber,
+                        color: Color.fromRGBO(143, 164, 189, 1),
                         alignment: Alignment(0, 0),
                         height: MediaQuery.of(context).size.height * 0.1,
                         width: MediaQuery.of(context).size.width * 0.4,

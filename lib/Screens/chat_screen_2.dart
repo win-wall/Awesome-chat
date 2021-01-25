@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_chat_app/Models/message_model.dart';
 import 'package:awesome_chat_app/Models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,6 +27,10 @@ class _ChatScreensState extends State<ChatScreens> {
   Message2 msg;
   _ChatScreensState(this.user_uid, this.current_uid, this.username, this.url);
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final _field = TextEditingController();
+  void ClearTextInput() {
+    _field.clear();
+  }
 
   void sendMsg() async {
     print('Hello' + user_uid);
@@ -104,7 +109,9 @@ class _ChatScreensState extends State<ChatScreens> {
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       width: MediaQuery.of(context).size.width * 0.5,
       decoration: BoxDecoration(
-          color: (message.isMe) ? Colors.blue : Colors.red,
+          color: (message.isMe)
+              ? Color.fromRGBO(95, 158, 160, 0.5)
+              : Color.fromRGBO(158, 160, 95, 0.5),
           borderRadius: message.isMe
               ? BorderRadius.only(
                   topLeft: Radius.circular(15), bottomLeft: Radius.circular(15))
@@ -146,9 +153,9 @@ class _ChatScreensState extends State<ChatScreens> {
       color: Colors.white,
       child: Row(
         children: [
-          IconButton(icon: Icon(Icons.photo), onPressed: null),
           Expanded(
               child: TextField(
+            controller: _field,
             decoration:
                 InputDecoration.collapsed(hintText: 'Send a message...'),
             onChanged: (vaule) {
@@ -159,6 +166,7 @@ class _ChatScreensState extends State<ChatScreens> {
               icon: Icon(Icons.send),
               onPressed: () {
                 sendMsg();
+                ClearTextInput();
               })
         ],
       ),
@@ -171,9 +179,20 @@ class _ChatScreensState extends State<ChatScreens> {
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
-          title: Text(
-            widget.username,
-            textAlign: TextAlign.center,
+          centerTitle: true,
+          title: Container(
+            alignment: Alignment(-0.5, 0),
+            child: Container(
+              alignment: Alignment(0, 0),
+              height: MediaQuery.of(context).size.height * 0.04,
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: AutoSizeText(
+                widget.username,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 100),
+                maxLines: 1,
+              ),
+            ),
           ),
           elevation: 0.0,
         ),

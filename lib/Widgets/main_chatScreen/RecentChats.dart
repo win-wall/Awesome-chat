@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_chat_app/Models/message_model.dart';
 import 'package:awesome_chat_app/Models/user_model.dart';
 import 'package:awesome_chat_app/Screens/chat_screen.dart';
@@ -103,7 +104,7 @@ class _RecentChatsState extends State<RecentChats> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: Color.fromRGBO(95, 158, 160, 0.5),
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(
                                         MediaQuery.of(context).size.width *
@@ -135,30 +136,51 @@ class _RecentChatsState extends State<RecentChats> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          yes ? senderName : receiverName,
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold),
+                                        Container(
+                                          alignment: Alignment(0, -1),
+                                          child: Container(
+                                            alignment: Alignment(-1, -1),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            child: AutoSizeText(
+                                              yes ? senderName : receiverName,
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      158, 160, 95, 1),
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.07,
+                                                  fontWeight: FontWeight.bold),
+                                              maxLines: 1,
+                                            ),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 5.0,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.45,
-                                          child: Text(
-                                            msg.text,
-                                            style: TextStyle(
-                                                color: Colors.blueGrey,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w600),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        )
+                                            alignment: Alignment(-1, -1),
+                                            child: Container(
+                                              alignment: Alignment(-1, -1),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.45,
+                                              child: AutoSizeText(
+                                                msg.text,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                            ))
                                       ],
                                     ),
                                   ],
@@ -170,7 +192,6 @@ class _RecentChatsState extends State<RecentChats> {
                                             .format(msg.time.toDate())
                                         : DateFormat.Hms()
                                             .format(msg.time.toDate())),
-                                    Text('new')
                                   ],
                                 )
                               ],

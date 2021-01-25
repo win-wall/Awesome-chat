@@ -40,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(labelText: 'Search user with email'),
+            style: TextStyle(color: Colors.white),
             onChanged: (value) {
               _userEmail = value;
               setState(() {});

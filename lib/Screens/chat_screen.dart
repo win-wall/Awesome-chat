@@ -16,13 +16,13 @@ class ChatScreen extends StatelessWidget {
         backgroundColor: Color.fromRGBO(60, 59, 45, 1),
         appBar: AppBar(
           centerTitle: true,
-          leadingWidth: MediaQuery.of(context).size.width * 0.1,
+          leadingWidth: MediaQuery.of(context).size.width * 0.15,
           leading: DropdownButton(
             icon: Icon(
               Icons.more_vert,
               color: Colors.white,
             ),
-            iconSize: 10,
+            iconSize: 15,
             items: [
               DropdownMenuItem(
                 child: Container(

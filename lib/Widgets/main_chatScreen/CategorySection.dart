@@ -10,7 +10,7 @@ class CategorySection extends StatefulWidget {
 
 class _CategorySectionState extends State<CategorySection> {
   int selectedIndex = 0;
-  final List<String> categories = ['Messages', 'Online', 'Groups', 'Request'];
+  final List<String> categories = ['Messages', 'Coming soon'];
   @override
   Widget build(BuildContext context) {
     return Container(
