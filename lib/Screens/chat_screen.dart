@@ -15,22 +15,21 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Color.fromRGBO(60, 59, 45, 1),
         appBar: AppBar(
+          centerTitle: true,
+          leadingWidth: MediaQuery.of(context).size.width * 0.1,
           leading: DropdownButton(
             icon: Icon(
               Icons.more_vert,
               color: Colors.white,
             ),
-            iconSize: 30,
+            iconSize: 10,
             items: [
               DropdownMenuItem(
                 child: Container(
                   child: Row(
                     children: [
                       Icon(Icons.exit_to_app),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text('Log out')
+                      SizedBox(width: 1),
                     ],
                   ),
                 ),
