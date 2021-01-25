@@ -35,6 +35,7 @@ dependencies:
   rive: ^0.6.2
   image_picker: ^0.6.5+3
   firebase_storage: ^4.0.0
+  firebase_messaging: ^7.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -104,21 +104,25 @@ class _MyChildState extends State<MyChild> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   if (!_isLogin) UserImagePicker(_pickedImage),
-                                  TextFormField(
-                                    key: ValueKey('email'),
-                                    validator: (value) {
-                                      if (value.isEmpty ||
-                                          !value.contains('@')) {
-                                        return 'Please enter a valid email address';
-                                      }
-                                      return null;
-                                    },
-                                    keyboardType: TextInputType.emailAddress,
-                                    decoration: InputDecoration(
-                                        labelText: 'Your Email'),
-                                    onSaved: (value) {
-                                      user.email = value.trim();
-                                    },
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    child: TextFormField(
+                                      key: ValueKey('email'),
+                                      validator: (value) {
+                                        if (value.isEmpty ||
+                                            !value.contains('@')) {
+                                          return 'Please enter a valid email address';
+                                        }
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.emailAddress,
+                                      decoration: InputDecoration(
+                                          labelText: 'Your Email'),
+                                      onSaved: (value) {
+                                        user.email = value.trim();
+                                      },
+                                    ),
                                   ),
                                   if (_isLogin)
                                     SizedBox(
@@ -127,19 +131,24 @@ class _MyChildState extends State<MyChild> {
                                               0.02,
                                     ),
                                   if (!_isLogin)
-                                    TextFormField(
-                                      key: ValueKey('name'),
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return 'I think you have a name';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                          labelText: 'Full Name'),
-                                      onSaved: (value) {
-                                        user.name = value.trim();
-                                      },
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.07,
+                                      child: TextFormField(
+                                        key: ValueKey('name'),
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'I think you have a name';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                            labelText: 'Full Name'),
+                                        onSaved: (value) {
+                                          user.name = value.trim();
+                                        },
+                                      ),
                                     ),
                                   if (_isLogin)
                                     SizedBox(
@@ -147,20 +156,24 @@ class _MyChildState extends State<MyChild> {
                                           MediaQuery.of(context).size.height *
                                               0.02,
                                     ),
-                                  TextFormField(
-                                    key: ValueKey('password'),
-                                    validator: (value) {
-                                      if (value.isEmpty || value.length < 6) {
-                                        return 'Please enter at least 6 characters';
-                                      }
-                                      return null;
-                                    },
-                                    decoration:
-                                        InputDecoration(labelText: 'Password'),
-                                    obscureText: true,
-                                    onSaved: (value) {
-                                      user.password = value;
-                                    },
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                    child: TextFormField(
+                                      key: ValueKey('password'),
+                                      validator: (value) {
+                                        if (value.isEmpty || value.length < 6) {
+                                          return 'Please enter at least 6 characters';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          labelText: 'Password'),
+                                      obscureText: true,
+                                      onSaved: (value) {
+                                        user.password = value;
+                                      },
+                                    ),
                                   ),
                                 ],
                               )),

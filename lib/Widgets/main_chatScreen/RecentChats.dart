@@ -5,6 +5,7 @@ import 'package:awesome_chat_app/Screens/chat_screen.dart';
 import 'package:awesome_chat_app/Screens/chat_screen_2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +25,23 @@ class _RecentChatsState extends State<RecentChats> {
   String receiverurl;
   final FirebaseAuth auth = FirebaseAuth.instance;
   bool yes;
+  @override
+  void initState() {
+    super.initState();
+    final fbm = FirebaseMessaging();
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (msg) {
+      print(msg);
+      return;
+    }, onLaunch: (msg) {
+      print(msg);
+      return;
+    }, onResume: (msg) {
+      print(msg);
+      return;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
