@@ -19,5 +19,7 @@ Công nghệ:
 ![alt text](https://github.com/win-wall/Awesome-chat/blob/main/database.png)
 ## Tác giả:
 + Thôi Đặng Thắng Tường
+link facebook: https://www.facebook.com/profile.php?id=100010501324921
 + Nguyễn Văn Hoài Nam
+link facebook: https://www.facebook.com/hoainam0450
 
